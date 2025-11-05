@@ -1,0 +1,12 @@
+{
+    "minReplicas": "1",
+    "maxReplicas": "1",
+    "limits": {
+        "cpu": "200m",
+        "mem": "256Mi"
+    },
+    "requests": {
+        "cpu": "20m",
+        "mem": "100Mi"
+    }
+}

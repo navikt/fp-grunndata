@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <appender name="stdoutConsoleLogger" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="net.logstash.logback.encoder.LogstashEncoder">
+            <throwableConverter class="net.logstash.logback.stacktrace.ShortenedThrowableConverter">
+                <maxLength>15000</maxLength>
+                <maxDepthPerThrowable>200</maxDepthPerThrowable>
+                <shortenedClassNameLength>70</shortenedClassNameLength>
+                <exclude>\$\$_Weld</exclude>
+                <exclude>java\.lang\.reflect\.Method\.invoke</exclude>
+                <exclude>java\.lang\.reflect\.Constructor\.newInstance</exclude>
+                <exclude>jdk\.internal\.reflect\.DelegatingMethodAccessorImpl\.invoke</exclude>
+                <exclude>jdk\.internal\.reflect\.DelegatingConstructorAccessorImpl\.newInstance</exclude>
+                <exclude>jdk\.internal\.reflect\.NativeMethodAccessorImpl\.invoke</exclude>
+                <exclude>jdk\.internal\.reflect\.NativeConstructorAccessorImpl\.newInstance</exclude>
+                <exclude>org\.jboss\.weld\.bean\.proxy\.CombinedInterceptorAndDecoratorStackMethodHandler</exclude>
+                <exclude>org\.jboss\.weld\.interceptor\.proxy\.AroundInvokeInvocationContext</exclude>
+                <exclude>org\.jboss\.weld\.interceptor\.proxy\.InterceptorMethodHandler</exclude>
+                <exclude>org\.jboss\.weld\.interceptor\.proxy\.NonTerminalAroundInvokeInvocationContext</exclude>
+                <exclude>org\.jboss\.weld\.interceptor\.proxy\.TerminalAroundInvokeInvocationContext</exclude>
+                <exclude>org\.jboss\.weld\.interceptor\.reader\.SimpleInterceptorInvocation</exclude>
+                <rootCauseFirst>false</rootCauseFirst>
+            </throwableConverter>
+        </encoder>
+    </appender>
+
+    <!-- SecureLog -->
+    <appender name="secureLogger" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>/secure-logs/secure.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+            <fileNamePattern>/secure-logs/secure.log.%i</fileNamePattern>
+            <minIndex>1</minIndex>
+            <maxIndex>1</maxIndex>
+        </rollingPolicy>
+        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <maxFileSize>50MB</maxFileSize>
+        </triggeringPolicy>
+        <encoder class="net.logstash.logback.encoder.LogstashEncoder"/>
+    </appender>
+
+    <!-- TeamLogs -->
+    <appender name="teamLogger" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
+        <destination>team-logs.nais-system:5170</destination>
+        <encoder class="net.logstash.logback.encoder.LogstashEncoder">
+            <customFields>
+                {"google_cloud_project":"${GOOGLE_CLOUD_PROJECT}","nais_namespace_name":"${NAIS_NAMESPACE}","nais_pod_name":"${HOSTNAME}","nais_container_name":"${NAIS_APP_NAME}"}
+            </customFields>
+            <includeContext>false</includeContext>
+        </encoder>
+    </appender>
+
+    <logger name="no.nav" level="${log.level.no.nav:-INFO}"/>
+
+    <logger name="ch.qos.logback" level="${log.level.ch.qos.logback:-WARN}"/>
+    <logger name="org.apache" level="${log.level.org.apache:-ERROR}"/>
+    <logger name="org.jboss.weld" level="${log.level.org.jboss.weld:-WARN}"/>
+
+    <include optional="true" resource="logback-${NAIS_CLUSTER_NAME}.xml"/>
+
+    <root level="${log.level.root:-INFO}">
+        <appender-ref ref="stdoutConsoleLogger"/>
+    </root>
+
+</configuration>

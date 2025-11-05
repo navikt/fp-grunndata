@@ -1,0 +1,54 @@
+kind: Application
+apiVersion: nais.io/v1alpha1
+metadata:
+  name: fpkonto
+  namespace: teamforeldrepenger
+  labels:
+    team: teamforeldrepenger
+spec:
+  image: {{image}}
+  port: 8080
+  liveness:
+    path: /fpkonto/internal/health/isAlive
+    initialDelay: 15
+    periodSeconds: 10
+    failureThreshold: 20
+    timeout: 3
+  readiness:
+    path: /fpkonto/internal/health/isReady
+    initialDelay: 15
+    periodSeconds: 10
+    failureThreshold: 20
+    timeout: 3
+  prometheus:
+    enabled: true
+    path: /fpkonto/internal/metrics/prometheus
+  preStopHook:
+    http:
+      path: /fpkonto/internal/health/preStop
+  replicas:
+    min: {{minReplicas}}
+    max: {{maxReplicas}}
+    scalingStrategy:
+      cpu:
+        thresholdPercentage: 80
+  resources:
+    limits:
+      cpu: "{{limits.cpu}}"
+      memory: "{{limits.mem}}"
+    requests:
+      cpu: "{{requests.cpu}}"
+      memory: "{{requests.mem}}"
+  observability:
+    autoInstrumentation:
+      enabled: true
+      runtime: java
+    logging:
+      destinations:
+        - id: loki
+        - id: elastic
+  accessPolicy:
+    inbound:
+      rules:
+        - application: foreldrepengesoknad
+        - application: planlegger
