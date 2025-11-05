@@ -51,4 +51,6 @@ spec:
     inbound:
       rules:
         - application: foreldrepengesoknad
+        - application: foreldrepengeoversikt
         - application: planlegger
+        - application: veiviser-hvor-mye
