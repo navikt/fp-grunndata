@@ -19,10 +19,13 @@ import no.nav.foreldrepenger.stønadskonto.regelmodell.StønadskontoRegelOrkestr
 import no.nav.foreldrepenger.stønadskonto.regelmodell.grunnlag.BeregnKontoerGrunnlag;
 import no.nav.foreldrepenger.stønadskonto.regelmodell.grunnlag.Dekningsgrad;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 @Path("/konto")
 @ApplicationScoped
 public class UttakRest {
-
+    private static final Logger LOG = LoggerFactory.getLogger(UttakRest.class);
     private static final StønadskontoRegelOrkestrering REGEL_ORKESTRERING = new StønadskontoRegelOrkestrering();
 
     @POST
@@ -36,6 +39,7 @@ public class UttakRest {
             "100", kontoberegning100
         );
 
+        LOG.info("Kontoberegning hentet");
         return Response.ok(result)
             .header("Access-Control-Allow-Origin", "*")
             .build();

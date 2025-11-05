@@ -7,6 +7,7 @@ import no.nav.foreldrepenger.konto.server.JacksonJsonConfig;
 
 import no.nav.foreldrepenger.konto.server.error.GeneralRestExceptionMapper;
 
+import no.nav.foreldrepenger.konto.server.error.ValidationExceptionMapper;
 import no.nav.foreldrepenger.konto.uttak.UttakRest;
 
 import org.glassfish.jersey.server.ResourceConfig;
@@ -22,6 +23,7 @@ public class ApiConfig extends ResourceConfig {
     public ApiConfig() {
         setApplicationName(ApiConfig.class.getSimpleName());
         register(GeneralRestExceptionMapper.class); // Exception handling
+        register(ValidationExceptionMapper.class); // Exception handling
         register(JacksonJsonConfig.class); // Json
         register(UttakRest.class);
         setProperties(getApplicationProperties());
