@@ -15,6 +15,7 @@ public class InternalApiConfig extends ResourceConfig {
     public static final String API_URI ="/internal";
 
     public InternalApiConfig() {
-        register(HealtCheckRest.class, PrometheusRestService.class);
+        register(HealtCheckRest.class);
+        register(PrometheusRestService.class);
     }
 }

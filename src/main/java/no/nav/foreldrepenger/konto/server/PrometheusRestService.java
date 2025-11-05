@@ -13,6 +13,10 @@ import static no.nav.vedtak.log.metrics.MetricsUtil.REGISTRY;
 @ApplicationScoped
 public class PrometheusRestService {
 
+    public PrometheusRestService() {
+        // CDI
+    }
+
     @GET
     @Path("/prometheus")
     public String prometheus() {
