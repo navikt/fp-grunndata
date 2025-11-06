@@ -10,13 +10,13 @@
     </parent>
 
     <groupId>no.nav.foreldrepenger.konto</groupId>
-    <artifactId>fp-konto</artifactId>
+    <artifactId>fp-grunndata</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <properties>
         <sonar.moduleKey>${project.artifactId}</sonar.moduleKey>
-        <sonar.projectName>fp-konto</sonar.projectName>
-        <sonar.projectKey>navikt_fp-konto</sonar.projectKey>
+        <sonar.projectName>fp-grunndata</sonar.projectName>
+        <sonar.projectKey>navikt_fp-grunndata</sonar.projectKey>
 
         <stonadskonto-regler.version>2.1.1</stonadskonto-regler.version>
         <felles.version>7.6.9</felles.version>
@@ -179,9 +179,9 @@
 
     <distributionManagement>
         <repository>
-            <id>fp-konto</id>
+            <id>fp-grunndata</id>
             <name>Github navikt Maven Packages</name>
-            <url>https://maven.pkg.github.com/navikt/fp-konto</url>
+            <url>https://maven.pkg.github.com/navikt/fp-grunndata</url>
         </repository>
     </distributionManagement>
 </project>

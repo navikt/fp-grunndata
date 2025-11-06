@@ -1,7 +1,7 @@
 kind: Application
 apiVersion: nais.io/v1alpha1
 metadata:
-  name: fpkonto
+  name: fpgrunndata
   namespace: teamforeldrepenger
   labels:
     team: teamforeldrepenger
@@ -9,20 +9,20 @@ spec:
   image: {{image}}
   port: 8080
   liveness:
-    path: /fpkonto/internal/health/isAlive
+    path: /fpgrunndata/internal/health/isAlive
     initialDelay: 15
     periodSeconds: 10
     failureThreshold: 20
     timeout: 3
   readiness:
-    path: /fpkonto/internal/health/isReady
+    path: /fpgrunndata/internal/health/isReady
     initialDelay: 15
     periodSeconds: 10
     failureThreshold: 20
     timeout: 3
   preStopHook:
     http:
-      path: /fpkonto/internal/health/preStop
+      path: /fpgrunndata/internal/health/preStop
   replicas:
     min: {{minReplicas}}
     max: {{maxReplicas}}

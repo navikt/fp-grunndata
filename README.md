@@ -1,2 +1,2 @@
-# fp-konto
-Server konto-regler til selvbetjening frontend
+# fp-grunndata
+Server grunndata til selvbetjening frontend
