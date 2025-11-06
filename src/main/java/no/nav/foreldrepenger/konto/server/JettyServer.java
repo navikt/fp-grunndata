@@ -75,7 +75,7 @@ public class JettyServer {
         context.addServlet(servlet, path + "/*");
     }
 
-    private void start() throws Exception {
+    void start() throws Exception {
         LOG.info("Starter server");
         System.setProperty("task.manager.runner.threads", "4");
         var server = new Server(getServerPort());

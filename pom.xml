@@ -20,6 +20,8 @@
 
         <stonadskonto-regler.version>2.1.1</stonadskonto-regler.version>
         <felles.version>7.6.9</felles.version>
+
+        <openapi-spec-utils.version>2.0.6</openapi-spec-utils.version>
     </properties>
 
     <dependencyManagement>
@@ -48,14 +50,6 @@
             <groupId>no.nav.foreldrepenger.felles</groupId>
             <artifactId>felles-konfig</artifactId>
         </dependency>
-        <dependency>
-            <groupId>no.nav.foreldrepenger.felles</groupId>
-            <artifactId>felles-server</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>no.nav.foreldrepenger.felles</groupId>
-            <artifactId>felles-log</artifactId>
-        </dependency>
 
         <!-- CDI -->
         <dependency>
@@ -72,24 +66,31 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- Hibernate -->
+        <!-- SWAGGER -->
         <dependency>
-            <groupId>org.hibernate.orm</groupId>
-            <artifactId>hibernate-core</artifactId>
+            <groupId>io.swagger.core.v3</groupId>
+            <artifactId>swagger-jaxrs2-jakarta</artifactId>
         </dependency>
+        <dependency>
+            <groupId>no.nav.openapi.spec.utils</groupId>
+            <artifactId>openapi-spec-utils</artifactId>
+            <version>${openapi-spec-utils.version}</version>
+        </dependency>
+
+        <!-- Hibernate -->
         <dependency>
             <groupId>org.hibernate.validator</groupId>
             <artifactId>hibernate-validator</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.hibernate.orm</groupId>
-            <artifactId>hibernate-micrometer</artifactId>
         </dependency>
 
         <!-- Server -->
         <dependency>
             <groupId>org.eclipse.jetty.ee11</groupId>
-            <artifactId>jetty-ee11-webapp</artifactId>
+            <artifactId>jetty-ee11-servlet</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish.jaxb</groupId>
+            <artifactId>jaxb-runtime</artifactId>
         </dependency>
         <dependency>
             <groupId>org.eclipse.jetty.ee11</groupId>

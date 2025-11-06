@@ -7,6 +7,7 @@ import static no.nav.foreldrepenger.stønadskonto.regelmodell.grunnlag.Dekningsg
 import java.util.Map;
 
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.context.RequestScoped;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import jakarta.ws.rs.OPTIONS;
@@ -23,35 +24,21 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @Path("/konto")
-@ApplicationScoped
+@RequestScoped
 public class UttakRest {
     private static final Logger LOG = LoggerFactory.getLogger(UttakRest.class);
     private static final StønadskontoRegelOrkestrering REGEL_ORKESTRERING = new StønadskontoRegelOrkestrering();
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public Response konto(@Valid @NotNull KontoBeregningGrunnlagDto grunnlag) {
+    public KontoBeregningResultatDto konto(@Valid @NotNull KontoBeregningGrunnlagDto grunnlag) {
         guardFamiliehendelse(grunnlag);
-        var kontoberegning80 = kontoberegningFra(grunnlag, DEKNINGSGRAD_80);
-        var kontoberegning100 = kontoberegningFra(grunnlag, DEKNINGSGRAD_100);
-        var result = Map.of(
-            "80", kontoberegning80,
-            "100", kontoberegning100
+        var kontoBeregningResultatDto = new KontoBeregningResultatDto(
+            kontoberegningFra(grunnlag, DEKNINGSGRAD_80),
+            kontoberegningFra(grunnlag, DEKNINGSGRAD_100)
         );
-
         LOG.info("Kontoberegning hentet");
-        return Response.ok(result)
-            .header("Access-Control-Allow-Origin", "*")
-            .build();
-    }
-
-    @OPTIONS
-    public Response options() {
-        return Response.ok()
-            .header("Access-Control-Allow-Origin", "*")
-            .header("Access-Control-Allow-Methods", "POST, OPTIONS")
-            .header("Access-Control-Allow-Headers", "Content-Type, Accept")
-            .build();
+        return kontoBeregningResultatDto;
     }
 
     private KontoBeregningDto kontoberegningFra(KontoBeregningGrunnlagDto grunnlag, Dekningsgrad dekningsgrad) {

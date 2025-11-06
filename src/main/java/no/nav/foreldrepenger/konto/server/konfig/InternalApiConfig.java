@@ -3,8 +3,6 @@ package no.nav.foreldrepenger.konto.server.konfig;
 
 import no.nav.foreldrepenger.konto.server.HealtCheckRest;
 
-import no.nav.foreldrepenger.konto.server.PrometheusRestService;
-
 import org.glassfish.jersey.server.ResourceConfig;
 
 import jakarta.ws.rs.ApplicationPath;
@@ -16,6 +14,5 @@ public class InternalApiConfig extends ResourceConfig {
 
     public InternalApiConfig() {
         register(HealtCheckRest.class);
-        register(PrometheusRestService.class);
     }
 }
