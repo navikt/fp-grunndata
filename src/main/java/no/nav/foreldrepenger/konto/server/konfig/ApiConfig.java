@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Set;
 
 import io.swagger.v3.jaxrs2.integration.resources.OpenApiResource;
+import no.nav.foreldrepenger.konfig.Environment;
 import no.nav.foreldrepenger.konto.server.CorsResponseFilter;
 import no.nav.foreldrepenger.konto.server.JacksonJsonConfig;
 
@@ -21,7 +22,7 @@ import jakarta.ws.rs.ApplicationPath;
 
 @ApplicationPath(ApiConfig.API_URI)
 public class ApiConfig extends ResourceConfig {
-
+    private static final Environment ENV = Environment.current();
     public static final String API_URI ="/api";
 
     public ApiConfig() {
@@ -29,7 +30,9 @@ public class ApiConfig extends ResourceConfig {
         register(GeneralRestExceptionMapper.class); // Exception handling
         register(ValidationExceptionMapper.class); // Exception handling
         register(JacksonJsonConfig.class); // Json
-        registerClasses(CorsResponseFilter.class); // CORS - allow all origins
+        if (!ENV.isProd()) {
+            registerClasses(CorsResponseFilter.class); // CORS - allow all origins
+        }
         registerClasses(getApplicationClasses());
         registerOpenApi();
         setProperties(getApplicationProperties());

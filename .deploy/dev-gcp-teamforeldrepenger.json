@@ -1,4 +1,5 @@
 {
+    "ingress": "https://fpgrunnlag.intern.dev.nav.no",
     "minReplicas": "1",
     "maxReplicas": "1",
     "limits": {
