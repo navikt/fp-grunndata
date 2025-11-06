@@ -1,4 +1,4 @@
-package no.nav.foreldrepenger.konto.server;
+package no.nav.foreldrepenger.grunnlag.server;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 

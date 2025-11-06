@@ -1,4 +1,4 @@
-package no.nav.foreldrepenger.konto.server;
+package no.nav.foreldrepenger.grunnlag.server;
 
 class JettyDevServer extends JettyServer {
 

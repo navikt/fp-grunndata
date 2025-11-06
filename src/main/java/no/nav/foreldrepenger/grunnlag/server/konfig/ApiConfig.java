@@ -1,4 +1,4 @@
-package no.nav.foreldrepenger.konto.server.konfig;
+package no.nav.foreldrepenger.grunnlag.server.konfig;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -6,14 +6,14 @@ import java.util.Set;
 
 import io.swagger.v3.jaxrs2.integration.resources.OpenApiResource;
 import no.nav.foreldrepenger.konfig.Environment;
-import no.nav.foreldrepenger.konto.server.CorsResponseFilter;
-import no.nav.foreldrepenger.konto.server.JacksonJsonConfig;
+import no.nav.foreldrepenger.grunnlag.server.CorsResponseFilter;
+import no.nav.foreldrepenger.grunnlag.server.JacksonJsonConfig;
 
-import no.nav.foreldrepenger.konto.server.error.GeneralRestExceptionMapper;
+import no.nav.foreldrepenger.grunnlag.server.error.GeneralRestExceptionMapper;
 
-import no.nav.foreldrepenger.konto.server.error.ValidationExceptionMapper;
-import no.nav.foreldrepenger.konto.server.konfig.swagger.OpenApiUtils;
-import no.nav.foreldrepenger.konto.uttak.UttakRest;
+import no.nav.foreldrepenger.grunnlag.server.error.ValidationExceptionMapper;
+import no.nav.foreldrepenger.grunnlag.server.konfig.swagger.OpenApiUtils;
+import no.nav.foreldrepenger.grunnlag.uttak.UttakRest;
 
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.server.ServerProperties;

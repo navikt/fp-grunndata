@@ -1,4 +1,4 @@
-package no.nav.foreldrepenger.konto.server.error;
+package no.nav.foreldrepenger.grunnlag.server.error;
 
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;

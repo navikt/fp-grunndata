@@ -1,4 +1,4 @@
-package no.nav.foreldrepenger.konto.server;
+package no.nav.foreldrepenger.grunnlag.server;
 
 import jakarta.ws.rs.container.ContainerRequestContext;
 import jakarta.ws.rs.container.ContainerResponseContext;

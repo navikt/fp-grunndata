@@ -1,4 +1,4 @@
-package no.nav.foreldrepenger.konto.server.konfig.swagger;
+package no.nav.foreldrepenger.grunnlag.server.konfig.swagger;
 
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;

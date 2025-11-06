@@ -1,7 +1,7 @@
-package no.nav.foreldrepenger.konto.server.konfig;
+package no.nav.foreldrepenger.grunnlag.server.konfig;
 
 
-import no.nav.foreldrepenger.konto.server.HealtCheckRest;
+import no.nav.foreldrepenger.grunnlag.server.HealtCheckRest;
 
 import org.glassfish.jersey.server.ResourceConfig;
 

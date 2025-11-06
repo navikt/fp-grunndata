@@ -1,4 +1,4 @@
-package no.nav.foreldrepenger.konto.uttak;
+package no.nav.foreldrepenger.grunnlag.uttak;
 
 import static no.nav.foreldrepenger.stønadskonto.regelmodell.StønadskontoKontotype.BARE_FAR_RETT;
 import static no.nav.foreldrepenger.stønadskonto.regelmodell.StønadskontoKontotype.FAR_RUNDT_FØDSEL;

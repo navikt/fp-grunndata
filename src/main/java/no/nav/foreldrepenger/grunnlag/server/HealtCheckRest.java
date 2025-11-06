@@ -1,7 +1,4 @@
-package no.nav.foreldrepenger.konto.server;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+package no.nav.foreldrepenger.grunnlag.server;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.ws.rs.GET;

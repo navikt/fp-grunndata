@@ -1,4 +1,4 @@
-package no.nav.foreldrepenger.konto.server;
+package no.nav.foreldrepenger.grunnlag.server;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,8 +20,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import no.nav.foreldrepenger.konfig.Environment;
-import no.nav.foreldrepenger.konto.server.konfig.ApiConfig;
-import no.nav.foreldrepenger.konto.server.konfig.InternalApiConfig;
+import no.nav.foreldrepenger.grunnlag.server.konfig.ApiConfig;
+import no.nav.foreldrepenger.grunnlag.server.konfig.InternalApiConfig;
 
 public class JettyServer {
     private static final Logger LOG = LoggerFactory.getLogger(JettyServer.class);

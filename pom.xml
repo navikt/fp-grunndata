@@ -169,7 +169,7 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
-                            <mainClass>no.nav.foreldrepenger.konto.server.JettyServer</mainClass>
+                            <mainClass>no.nav.foreldrepenger.grunnlag.server.JettyServer</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

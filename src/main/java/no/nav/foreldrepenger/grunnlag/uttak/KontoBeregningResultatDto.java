@@ -1,4 +1,4 @@
-package no.nav.foreldrepenger.konto.uttak;
+package no.nav.foreldrepenger.grunnlag.uttak;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

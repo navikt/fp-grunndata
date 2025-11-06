@@ -1,4 +1,4 @@
-package no.nav.foreldrepenger.konto.server.konfig.swagger;
+package no.nav.foreldrepenger.grunnlag.server.konfig.swagger;
 
 import java.util.Optional;
 import java.util.Set;

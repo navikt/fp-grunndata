@@ -1,21 +1,16 @@
-package no.nav.foreldrepenger.konto.uttak;
+package no.nav.foreldrepenger.grunnlag.uttak;
 
-import static no.nav.foreldrepenger.konto.uttak.KontoBeregningDtoMapper.tilKontoberegning;
+import static no.nav.foreldrepenger.grunnlag.uttak.KontoBeregningDtoMapper.tilKontoberegning;
 import static no.nav.foreldrepenger.stønadskonto.regelmodell.grunnlag.Dekningsgrad.DEKNINGSGRAD_100;
 import static no.nav.foreldrepenger.stønadskonto.regelmodell.grunnlag.Dekningsgrad.DEKNINGSGRAD_80;
 
-import java.util.Map;
-
-import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
-import jakarta.ws.rs.OPTIONS;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
-import jakarta.ws.rs.core.Response;
 import no.nav.foreldrepenger.stønadskonto.regelmodell.StønadskontoRegelOrkestrering;
 import no.nav.foreldrepenger.stønadskonto.regelmodell.grunnlag.BeregnKontoerGrunnlag;
 import no.nav.foreldrepenger.stønadskonto.regelmodell.grunnlag.Dekningsgrad;
