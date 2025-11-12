@@ -8,7 +8,7 @@ metadata:
 spec:
   image: {{image}}
   port: 8080
-  {{#if ingress}}
+  {{#if ingress}} # Brukes av storybook og typegenerering frontend
   ingresses:
     - {{ingress}}
   {{/if}}
