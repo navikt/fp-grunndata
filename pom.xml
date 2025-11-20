@@ -6,7 +6,7 @@
     <parent>
         <groupId>no.nav.foreldrepenger.felles</groupId>
         <artifactId>fp-parent-app</artifactId>
-        <version>5.0.2</version>
+        <version>5.0.3</version>
     </parent>
 
     <groupId>no.nav.foreldrepenger.konto</groupId>
@@ -19,7 +19,7 @@
         <sonar.projectKey>navikt_fp-grunndata</sonar.projectKey>
 
         <stonadskonto-regler.version>2.1.1</stonadskonto-regler.version>
-        <felles.version>7.6.9</felles.version>
+        <felles.version>7.6.10</felles.version>
 
         <openapi-spec-utils.version>2.0.6</openapi-spec-utils.version>
     </properties>
