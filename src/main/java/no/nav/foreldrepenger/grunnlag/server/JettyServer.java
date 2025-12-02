@@ -18,6 +18,7 @@ import org.eclipse.jetty.server.handler.ContextHandler;
 import org.glassfish.jersey.servlet.ServletContainer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.bridge.SLF4JBridgeHandler;
 
 import no.nav.foreldrepenger.konfig.Environment;
 import no.nav.foreldrepenger.grunnlag.server.konfig.ApiConfig;
@@ -76,6 +77,7 @@ public class JettyServer {
     }
 
     void start() throws Exception {
+        konfigurerLogging();
         LOG.info("Starter server");
         System.setProperty("task.manager.runner.threads", "4");
         var server = new Server(getServerPort());
@@ -94,6 +96,15 @@ public class JettyServer {
         httpConnector.setPort(getServerPort());
         connectors.add(httpConnector);
         return connectors;
+    }
+
+    /**
+     * Vi bruker SLF4J + logback, Jersey bruker JUL for logging.
+     * Setter opp en bridge for å få Jersey til å logge gjennom Logback også.
+     */
+    private static void konfigurerLogging() {
+        SLF4JBridgeHandler.removeHandlersForRootLogger();
+        SLF4JBridgeHandler.install();
     }
 
     private static ConstraintSecurityHandler simpleConstraints() {
