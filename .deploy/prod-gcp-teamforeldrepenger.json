@@ -1,5 +1,5 @@
 {
-    "ingress": null,
+    "ingresses": [],
     "minReplicas": "2",
     "maxReplicas": "2",
     "limits": {
