@@ -1,5 +1,5 @@
 {
-    "ingresses": ["https://fpgrunnlag.ekstern.dev.nav.no"],
+    "ingress": "https://fpgrunnlag.ekstern.dev.nav.no",
     "minReplicas": "1",
     "maxReplicas": "1",
     "limits": {

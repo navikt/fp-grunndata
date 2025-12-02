@@ -8,11 +8,11 @@ metadata:
 spec:
   image: {{image}}
   port: 8080
-{{#each ingresses as | ingress |}}
+{{#if ingress}}
   # Brukes av storybook og typegenerering frontend
   ingresses:
     - {{ingress}}
-{{/each}}
+{{/if}}
   liveness:
     path: /fpgrunndata/internal/health/isAlive
     initialDelay: 15
