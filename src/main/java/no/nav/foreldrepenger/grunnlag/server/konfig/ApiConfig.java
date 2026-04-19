@@ -4,21 +4,19 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import io.swagger.v3.jaxrs2.integration.resources.OpenApiResource;
-import no.nav.foreldrepenger.konfig.Environment;
-import no.nav.foreldrepenger.grunnlag.server.CorsResponseFilter;
-import no.nav.foreldrepenger.grunnlag.server.JacksonJsonConfig;
-
-import no.nav.foreldrepenger.grunnlag.server.error.GeneralRestExceptionMapper;
-
-import no.nav.foreldrepenger.grunnlag.server.error.ValidationExceptionMapper;
-import no.nav.foreldrepenger.grunnlag.server.konfig.swagger.OpenApiUtils;
-import no.nav.foreldrepenger.grunnlag.uttak.UttakRest;
-
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.server.ServerProperties;
 
+import io.swagger.v3.jaxrs2.integration.resources.OpenApiResource;
 import jakarta.ws.rs.ApplicationPath;
+import no.nav.foreldrepenger.grunnlag.server.CorsResponseFilter;
+import no.nav.foreldrepenger.grunnlag.server.konfig.swagger.TypegenereringFrontendOpenApiReader;
+import no.nav.foreldrepenger.grunnlag.uttak.UttakRest;
+import no.nav.foreldrepenger.konfig.Environment;
+import no.nav.vedtak.openapi.OpenApiUtils;
+import no.nav.vedtak.server.rest.GeneralRestExceptionMapper;
+import no.nav.vedtak.server.rest.ValidationExceptionMapper;
+import no.nav.vedtak.server.rest.jackson.Jackson2MapperFeature;
 
 @ApplicationPath(ApiConfig.API_URI)
 public class ApiConfig extends ResourceConfig {
@@ -27,14 +25,17 @@ public class ApiConfig extends ResourceConfig {
 
     public ApiConfig() {
         setApplicationName(ApiConfig.class.getSimpleName());
-        register(GeneralRestExceptionMapper.class); // Exception handling
-        register(ValidationExceptionMapper.class); // Exception handling
-        register(JacksonJsonConfig.class); // Json
+        // Standard rest-oppsett, men pga uinnloggete requests så er FpRestJackson2Feature utelukket
+        register(Jackson2MapperFeature.class);
+        register(ValidationExceptionMapper.class);
+        register(GeneralRestExceptionMapper.class);
+        // Openapi i non-prod
         if (!ENV.isProd()) {
             registerClasses(CorsResponseFilter.class); // CORS - allow all origins
+            registerOpenApi();
         }
+        // Businessklasser
         registerClasses(getApplicationClasses());
-        registerOpenApi();
         setProperties(getApplicationProperties());
     }
 
@@ -43,8 +44,9 @@ public class ApiConfig extends ResourceConfig {
     }
 
     private void registerOpenApi() {
-        OpenApiUtils.openApiConfigFor("Fpsoknad - specifikasjon for typegenerering frontend", this)
-            .readerClassTypegenereingFrontend()
+        var contextPath = ENV.getProperty("context.path", "/fpgrunndata");
+        OpenApiUtils.openApiConfigFor("Fp-grunndata - specifikasjon for typegenerering frontend", contextPath, this)
+            .readerClass(TypegenereringFrontendOpenApiReader.class)
             .registerClasses(getApplicationClasses())
             .buildOpenApiContext();
         register(OpenApiResource.class);
