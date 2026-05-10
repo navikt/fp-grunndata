@@ -16,7 +16,7 @@ import no.nav.foreldrepenger.konfig.Environment;
 import no.nav.vedtak.openapi.OpenApiUtils;
 import no.nav.vedtak.server.rest.GeneralRestExceptionMapper;
 import no.nav.vedtak.server.rest.ValidationExceptionMapper;
-import no.nav.vedtak.server.rest.jackson.Jackson2MapperFeature;
+import no.nav.vedtak.server.rest.jackson.Jackson2RestFeature;
 
 @ApplicationPath(ApiConfig.API_URI)
 public class ApiConfig extends ResourceConfig {
@@ -26,7 +26,7 @@ public class ApiConfig extends ResourceConfig {
     public ApiConfig() {
         setApplicationName(ApiConfig.class.getSimpleName());
         // Standard rest-oppsett, men pga uinnloggete requests så er FpRestJackson2Feature utelukket
-        register(Jackson2MapperFeature.class);
+        register(Jackson2RestFeature.class);
         register(ValidationExceptionMapper.class);
         register(GeneralRestExceptionMapper.class);
         // Openapi i non-prod
