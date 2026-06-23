@@ -1,21 +1,5 @@
 package no.nav.foreldrepenger.grunnlag.server;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.eclipse.jetty.ee11.cdi.CdiDecoratingListener;
-import org.eclipse.jetty.ee11.cdi.CdiServletContainerInitializer;
-import org.eclipse.jetty.ee11.servlet.DefaultServlet;
-import org.eclipse.jetty.ee11.servlet.ServletContextHandler;
-import org.eclipse.jetty.ee11.servlet.ServletHolder;
-import org.eclipse.jetty.ee11.servlet.security.ConstraintMapping;
-import org.eclipse.jetty.ee11.servlet.security.ConstraintSecurityHandler;
-import org.eclipse.jetty.security.Constraint;
-import org.eclipse.jetty.server.Connector;
-import org.eclipse.jetty.server.Server;
-import org.eclipse.jetty.server.ServerConnector;
-import org.eclipse.jetty.server.handler.ContextHandler;
-import org.glassfish.jersey.servlet.ServletContainer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.bridge.SLF4JBridgeHandler;
@@ -23,11 +7,11 @@ import org.slf4j.bridge.SLF4JBridgeHandler;
 import no.nav.foreldrepenger.konfig.Environment;
 import no.nav.foreldrepenger.grunnlag.server.konfig.ApiConfig;
 import no.nav.foreldrepenger.grunnlag.server.konfig.InternalApiConfig;
+import no.nav.vedtak.server.jetty.JettyServerBuilder;
 
 public class JettyServer {
     private static final Logger LOG = LoggerFactory.getLogger(JettyServer.class);
     private static final Environment ENV = Environment.current();
-    private static final String APPLICATION = "jakarta.ws.rs.Application";
 
     private static final String CONTEXT_PATH = ENV.getProperty("context.path", "/fpgrunndata");
 
@@ -45,59 +29,6 @@ public class JettyServer {
         return new JettyServer(ENV.getProperty("server.port", Integer.class, 8080));
     }
 
-    private static ContextHandler createContext() {
-        var ctx = new ServletContextHandler(CONTEXT_PATH, ServletContextHandler.NO_SESSIONS);
-
-        // Sikkerhet
-        ctx.setSecurityHandler(simpleConstraints());
-
-        // Servlets
-        registerDefaultServlet(ctx);
-        registerServlet(ctx, 0, InternalApiConfig.API_URI, InternalApiConfig.class);
-        registerServlet(ctx, 1, ApiConfig.API_URI, ApiConfig.class);
-
-        // Enable Weld + CDI
-        ctx.setInitParameter(CdiServletContainerInitializer.CDI_INTEGRATION_ATTRIBUTE, CdiDecoratingListener.MODE);
-        ctx.addServletContainerInitializer(new CdiServletContainerInitializer());
-        ctx.addServletContainerInitializer(new org.jboss.weld.environment.servlet.EnhancedListener());
-        return ctx;
-    }
-
-    private static void registerDefaultServlet(ServletContextHandler context) {
-        var defaultServlet = new ServletHolder(new DefaultServlet());
-        context.addServlet(defaultServlet, "/*");
-    }
-
-    private static void registerServlet(ServletContextHandler context, int prioritet, String path, Class<?> appClass) {
-        var servlet = new ServletHolder(new ServletContainer());
-        servlet.setName(appClass.getName());
-        servlet.setInitOrder(prioritet);
-        servlet.setInitParameter(APPLICATION, appClass.getName());
-        context.addServlet(servlet, path + "/*");
-    }
-
-    void start() throws Exception {
-        konfigurerLogging();
-        LOG.info("Starter server");
-        System.setProperty("task.manager.runner.threads", "4");
-        var server = new Server(getServerPort());
-        server.setConnectors(createConnectors(server).toArray(new Connector[]{}));
-        server.setHandler(createContext());
-        server.setStopAtShutdown(true);
-        server.setStopTimeout(10_000);
-        server.start();
-        LOG.info("Server startet på port: {}", getServerPort());
-        server.join();
-    }
-
-    private List<Connector> createConnectors(Server server) {
-        List<Connector> connectors = new ArrayList<>();
-        var httpConnector = new ServerConnector(server);
-        httpConnector.setPort(getServerPort());
-        connectors.add(httpConnector);
-        return connectors;
-    }
-
     /**
      * Vi bruker SLF4J + logback, Jersey bruker JUL for logging.
      * Setter opp en bridge for å få Jersey til å logge gjennom Logback også.
@@ -107,25 +38,18 @@ public class JettyServer {
         SLF4JBridgeHandler.install();
     }
 
-    private static ConstraintSecurityHandler simpleConstraints() {
-        var handler = new ConstraintSecurityHandler();
-        // Slipp gjennom kall fra plattform til JaxRs. Foreløpig kun behov for GET
-        handler.addConstraintMapping(pathConstraint(Constraint.ALLOWED, InternalApiConfig.API_URI + "/*"));
-        handler.addConstraintMapping(pathConstraint(Constraint.ALLOWED, ApiConfig.API_URI + "/*"));
-        // Alt annet av paths og metoder forbudt - 403
-        handler.addConstraintMapping(pathConstraint(Constraint.FORBIDDEN, "/*"));
-        return handler;
+    void start() throws Exception {
+        konfigurerLogging();
+        LOG.info("Starter server");
+        System.setProperty("task.manager.runner.threads", "4");
+        var server = JettyServerBuilder.builder()
+            .port(serverPort)
+            .contextPath(CONTEXT_PATH)
+            .registerRestApp(InternalApiConfig.API_URI, InternalApiConfig.class)
+            .registerRestApp(ApiConfig.API_URI, ApiConfig.class)
+            .build();
+        server.start();
+        LOG.info("Server startet på port: {}", serverPort);
+        server.join();
     }
-
-    private static ConstraintMapping pathConstraint(Constraint constraint, String path) {
-        var mapping = new ConstraintMapping();
-        mapping.setConstraint(constraint);
-        mapping.setPathSpec(path);
-        return mapping;
-    }
-
-    private Integer getServerPort() {
-        return this.serverPort;
-    }
-
 }
