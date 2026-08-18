@@ -14,7 +14,7 @@ import no.nav.foreldrepenger.grunnlag.server.konfig.swagger.TypegenereringFronte
 import no.nav.foreldrepenger.grunnlag.uttak.UttakRest;
 import no.nav.foreldrepenger.konfig.Environment;
 import no.nav.vedtak.openapi.OpenApiUtils;
-import no.nav.vedtak.server.rest.FpRestJackson2Feature;
+import no.nav.vedtak.server.rest.FpRestJacksonFeature;
 
 @ApplicationPath(ApiConfig.API_URI)
 public class ApiConfig extends ResourceConfig {
@@ -24,7 +24,7 @@ public class ApiConfig extends ResourceConfig {
     public ApiConfig() {
         setApplicationName(ApiConfig.class.getSimpleName());
         // Standard rest-oppsett, men pga uinnloggete requests så er FpRestJackson2Feature utelukket
-        register(FpRestJackson2Feature.class);
+        register(FpRestJacksonFeature.class);
         // Openapi i non-prod
         if (!ENV.isProd()) {
             registerClasses(CorsResponseFilter.class); // CORS - allow all origins
