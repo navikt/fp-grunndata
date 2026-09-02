@@ -18,7 +18,7 @@
         <sonar.projectName>fp-grunndata</sonar.projectName>
         <sonar.projectKey>navikt_fp-grunndata</sonar.projectKey>
 
-        <stonadskonto-regler.version>2.1.1</stonadskonto-regler.version>
+        <stonadskonto-regler.version>2.1.2</stonadskonto-regler.version>
         <felles.version>7.9.0</felles.version>
 
         <openapi-spec-utils.version>2.1.0</openapi-spec-utils.version>
