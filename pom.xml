@@ -6,7 +6,7 @@
     <parent>
         <groupId>no.nav.foreldrepenger.felles</groupId>
         <artifactId>fp-parent-app</artifactId>
-        <version>5.4.2</version>
+        <version>5.5.0</version>
     </parent>
 
     <groupId>no.nav.foreldrepenger.konto</groupId>
@@ -19,9 +19,7 @@
         <sonar.projectKey>navikt_fp-grunndata</sonar.projectKey>
 
         <stonadskonto-regler.version>2.1.2</stonadskonto-regler.version>
-        <felles.version>7.9.5</felles.version>
-
-        <openapi-spec-utils.version>2.1.0</openapi-spec-utils.version>
+        <felles.version>7.10.1</felles.version>
     </properties>
 
     <dependencyManagement>
@@ -77,12 +75,7 @@
         <!-- SWAGGER -->
         <dependency>
             <groupId>io.swagger.core.v3</groupId>
-            <artifactId>swagger-jaxrs2-jakarta</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>no.nav.openapi.spec.utils</groupId>
-            <artifactId>openapi-spec-utils</artifactId>
-            <version>${openapi-spec-utils.version}</version>
+            <artifactId>swagger-rest</artifactId>
         </dependency>
 
         <!-- Hibernate -->

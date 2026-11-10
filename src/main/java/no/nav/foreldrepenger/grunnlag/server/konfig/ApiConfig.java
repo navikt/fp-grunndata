@@ -7,13 +7,13 @@ import java.util.Set;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.server.ServerProperties;
 
-import io.swagger.v3.jaxrs2.integration.resources.OpenApiResource;
+import io.swagger.v3.rest.integration.resources.OpenApiResource;
 import jakarta.ws.rs.ApplicationPath;
 import no.nav.foreldrepenger.grunnlag.server.CorsResponseFilter;
-import no.nav.foreldrepenger.grunnlag.server.konfig.swagger.TypegenereringFrontendOpenApiReader;
 import no.nav.foreldrepenger.grunnlag.uttak.UttakRest;
 import no.nav.foreldrepenger.konfig.Environment;
 import no.nav.vedtak.openapi.OpenApiUtils;
+import no.nav.vedtak.openapi.TypegenereringOpenApiReader;
 import no.nav.vedtak.server.rest.FpRestJacksonFeature;
 
 @ApplicationPath(ApiConfig.API_URI)
@@ -42,7 +42,7 @@ public class ApiConfig extends ResourceConfig {
     private void registerOpenApi() {
         var contextPath = ENV.getProperty("context.path", "/fpgrunndata");
         OpenApiUtils.openApiConfigFor("Fp-grunndata - specifikasjon for typegenerering frontend", contextPath, this)
-            .readerClass(TypegenereringFrontendOpenApiReader.class)
+            .readerClass(TypegenereringOpenApiReader.class)
             .registerClasses(getApplicationClasses())
             .buildOpenApiContext();
         register(OpenApiResource.class);
